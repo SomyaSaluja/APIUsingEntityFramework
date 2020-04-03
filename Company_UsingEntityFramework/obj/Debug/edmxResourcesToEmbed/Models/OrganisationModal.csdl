@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EntityFrameworkDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="OrganisationContext" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Departments" EntityType="EntityFrameworkDBModel.Department" />
+    <EntitySet Name="Employees" EntityType="EntityFrameworkDBModel.Employee" />
+    <EntitySet Name="EmployeeProjects" EntityType="EntityFrameworkDBModel.EmployeeProject" />
+    <EntitySet Name="Laptops" EntityType="EntityFrameworkDBModel.Laptop" />
+    <EntitySet Name="Projects" EntityType="EntityFrameworkDBModel.Project" />
+    <AssociationSet Name="FK_Employee_Department" Association="EntityFrameworkDBModel.FK_Employee_Department">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeProject_Employee" Association="EntityFrameworkDBModel.FK_EmployeeProject_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="EmployeeProject" EntitySet="EmployeeProjects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Laptop_Employee" Association="EntityFrameworkDBModel.FK_Laptop_Employee">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Laptop" EntitySet="Laptops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeProject_Project" Association="EntityFrameworkDBModel.FK_EmployeeProject_Project">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="EmployeeProject" EntitySet="EmployeeProjects" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="DeptartmentName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Employees" Relationship="EntityFrameworkDBModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="EmpName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Salary" Type="Int32" Nullable="false" />
+    <Property Name="DeptId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Department" Relationship="EntityFrameworkDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
+    <NavigationProperty Name="EmployeeProjects" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Employee" FromRole="Employee" ToRole="EmployeeProject" />
+    <NavigationProperty Name="Laptops" Relationship="EntityFrameworkDBModel.FK_Laptop_Employee" FromRole="Employee" ToRole="Laptop" />
+  </EntityType>
+  <EntityType Name="EmployeeProject">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="EmpId" Type="Int32" Nullable="false" />
+    <Property Name="ProjectId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Employee" FromRole="EmployeeProject" ToRole="Employee" />
+    <NavigationProperty Name="Project" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Project" FromRole="EmployeeProject" ToRole="Project" />
+  </EntityType>
+  <EntityType Name="Laptop">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="BrandName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <Property Name="EmpId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="EntityFrameworkDBModel.FK_Laptop_Employee" FromRole="Laptop" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="EmployeeProjects" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Project" FromRole="Project" ToRole="EmployeeProject" />
+  </EntityType>
+  <Association Name="FK_Employee_Department">
+    <End Role="Department" Type="EntityFrameworkDBModel.Department" Multiplicity="1" />
+    <End Role="Employee" Type="EntityFrameworkDBModel.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="DeptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeProject_Employee">
+    <End Role="Employee" Type="EntityFrameworkDBModel.Employee" Multiplicity="1" />
+    <End Role="EmployeeProject" Type="EntityFrameworkDBModel.EmployeeProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeProject">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Laptop_Employee">
+    <End Role="Employee" Type="EntityFrameworkDBModel.Employee" Multiplicity="1" />
+    <End Role="Laptop" Type="EntityFrameworkDBModel.Laptop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Laptop">
+        <PropertyRef Name="EmpId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeProject_Project">
+    <End Role="Project" Type="EntityFrameworkDBModel.Project" Multiplicity="1" />
+    <End Role="EmployeeProject" Type="EntityFrameworkDBModel.EmployeeProject" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EmployeeProject">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

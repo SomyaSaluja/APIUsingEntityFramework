@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EntityFrameworkDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="EntityFrameworkDBModelStoreContainer">
+          <EntitySet Name="Department" EntityType="EntityFrameworkDBModel.Store.Department" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Employee" EntityType="EntityFrameworkDBModel.Store.Employee" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="EmployeeProject" EntityType="EntityFrameworkDBModel.Store.EmployeeProject" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Laptop" EntityType="EntityFrameworkDBModel.Store.Laptop" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Project" EntityType="EntityFrameworkDBModel.Store.Project" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Employee_Department" Association="EntityFrameworkDBModel.Store.FK_Employee_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProject_Employee" Association="EntityFrameworkDBModel.Store.FK_EmployeeProject_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="EmployeeProject" EntitySet="EmployeeProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProject_Project" Association="EntityFrameworkDBModel.Store.FK_EmployeeProject_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="EmployeeProject" EntitySet="EmployeeProject" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Laptop_Employee" Association="EntityFrameworkDBModel.Store.FK_Laptop_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Laptop" EntitySet="Laptop" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DeptartmentName" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmpName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Salary" Type="int" Nullable="false" />
+          <Property Name="DeptId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Laptop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="EmpId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK_Employee_Department">
+          <End Role="Department" Type="EntityFrameworkDBModel.Store.Department" Multiplicity="1" />
+          <End Role="Employee" Type="EntityFrameworkDBModel.Store.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProject_Employee">
+          <End Role="Employee" Type="EntityFrameworkDBModel.Store.Employee" Multiplicity="1" />
+          <End Role="EmployeeProject" Type="EntityFrameworkDBModel.Store.EmployeeProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeProject">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProject_Project">
+          <End Role="Project" Type="EntityFrameworkDBModel.Store.Project" Multiplicity="1" />
+          <End Role="EmployeeProject" Type="EntityFrameworkDBModel.Store.EmployeeProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeProject">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Laptop_Employee">
+          <End Role="Employee" Type="EntityFrameworkDBModel.Store.Employee" Multiplicity="1" />
+          <End Role="Laptop" Type="EntityFrameworkDBModel.Store.Laptop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Laptop">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EntityFrameworkDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="OrganisationContext" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="EntityFrameworkDBModel.Department" />
+          <EntitySet Name="Employees" EntityType="EntityFrameworkDBModel.Employee" />
+          <EntitySet Name="EmployeeProjects" EntityType="EntityFrameworkDBModel.EmployeeProject" />
+          <EntitySet Name="Laptops" EntityType="EntityFrameworkDBModel.Laptop" />
+          <EntitySet Name="Projects" EntityType="EntityFrameworkDBModel.Project" />
+          <AssociationSet Name="FK_Employee_Department" Association="EntityFrameworkDBModel.FK_Employee_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProject_Employee" Association="EntityFrameworkDBModel.FK_EmployeeProject_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeProject" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Laptop_Employee" Association="EntityFrameworkDBModel.FK_Laptop_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Laptop" EntitySet="Laptops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeProject_Project" Association="EntityFrameworkDBModel.FK_EmployeeProject_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="EmployeeProject" EntitySet="EmployeeProjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="DeptartmentName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Employees" Relationship="EntityFrameworkDBModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpName" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Salary" Type="Int32" Nullable="false" />
+          <Property Name="DeptId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="EntityFrameworkDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="EmployeeProjects" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Employee" FromRole="Employee" ToRole="EmployeeProject" />
+          <NavigationProperty Name="Laptops" Relationship="EntityFrameworkDBModel.FK_Laptop_Employee" FromRole="Employee" ToRole="Laptop" />
+        </EntityType>
+        <EntityType Name="EmployeeProject">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Employee" FromRole="EmployeeProject" ToRole="Employee" />
+          <NavigationProperty Name="Project" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Project" FromRole="EmployeeProject" ToRole="Project" />
+        </EntityType>
+        <EntityType Name="Laptop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="EmpId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="EntityFrameworkDBModel.FK_Laptop_Employee" FromRole="Laptop" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="EmployeeProjects" Relationship="EntityFrameworkDBModel.FK_EmployeeProject_Project" FromRole="Project" ToRole="EmployeeProject" />
+        </EntityType>
+        <Association Name="FK_Employee_Department">
+          <End Role="Department" Type="EntityFrameworkDBModel.Department" Multiplicity="1" />
+          <End Role="Employee" Type="EntityFrameworkDBModel.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProject_Employee">
+          <End Role="Employee" Type="EntityFrameworkDBModel.Employee" Multiplicity="1" />
+          <End Role="EmployeeProject" Type="EntityFrameworkDBModel.EmployeeProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeProject">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Laptop_Employee">
+          <End Role="Employee" Type="EntityFrameworkDBModel.Employee" Multiplicity="1" />
+          <End Role="Laptop" Type="EntityFrameworkDBModel.Laptop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Laptop">
+              <PropertyRef Name="EmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeProject_Project">
+          <End Role="Project" Type="EntityFrameworkDBModel.Project" Multiplicity="1" />
+          <End Role="EmployeeProject" Type="EntityFrameworkDBModel.EmployeeProject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeProject">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EntityFrameworkDBModelStoreContainer" CdmEntityContainer="OrganisationContext">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="EntityFrameworkDBModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DeptartmentName" ColumnName="DeptartmentName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="EntityFrameworkDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeProjects">
+            <EntityTypeMapping TypeName="EntityFrameworkDBModel.EmployeeProject">
+              <MappingFragment StoreEntitySet="EmployeeProject">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Laptops">
+            <EntityTypeMapping TypeName="EntityFrameworkDBModel.Laptop">
+              <MappingFragment StoreEntitySet="Laptop">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="EntityFrameworkDBModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
